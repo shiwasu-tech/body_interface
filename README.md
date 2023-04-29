@@ -26,3 +26,37 @@ Like these your hands would be Left-Hand-Devices.
 
 
 
+/*
+  mode1 = presentation
+  mode2 = browsing
+  mode3 = media
+  mode4 = individual-keys
+
+  mode1>Btn1>IMU = arrow        <141~144>   "slide <-/->"
+       >Btn2>IMU = alt+tab      <151~154>   "window cange"
+       >Btn1>Btn2= play/pause   <131>       "media play/pause"
+  
+  mode2>Btn1>IMU = arrow*5      <241~244>   "scroll"
+       >Btn2>IMU = alt+arrow    <251~254>   "go/back"
+       >Btn1>Btn2= F5           <231>       "reload"
+  
+  mode3>Btn1>IMU = media-<>⋀⋁   <341~344>   "next/previouse/Fullscreen/unFullscreen"
+       >Btu2>IMU = volume-Dn/Up <351~354> 
+       >Btn1>Btn2= play/pause   <331>
+
+  mode4>Btn1>IMU = mouse?
+       >Btn2>IMU = click? scroll?
+       >Btn1>Btn2= anykey       <431>       "you can choose from assets"
+
+    assets = "arrow","PgUp/PgDn","Enter","F5","Play/Pause","next/previous","alt + arrow","alt + tab","ctrl + z/ctrl + shift + z","Fullscreen/unFullscreen"
+*/
+/*
+  mode0 = Phone
+
+  mode0>Btn1>IMU = mouse?
+       >Btn2>IMU = scroll?
+       >Btn1>Btn2= shutter?
+
+  + grove joystick mouse??
+  
+*/
