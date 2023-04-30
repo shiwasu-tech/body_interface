@@ -234,12 +234,12 @@ void UIinit(int mode,int key){
     M5.Lcd.fillTriangle(145,48,155,43,155,53,BLUE);
     M5.Lcd.fillTriangle(175,43,175,53,185,48,BLUE);
     //play/pause
-    M5.Lcd.fillTriangle(200,33,200,37,204,35,GREEN);
-    M5.Lcd.drawLine(207,32,205,38,GREEN);
-    M5.Lcd.fillRect(209,34,2,4,GREEN);
-    M5.Lcd.fillRect(213,34,2,4,GREEN);
+    M5.Lcd.fillTriangle(200,33,200,37,204,35,RED);
+    M5.Lcd.drawLine(207,32,205,38,RED);
+    M5.Lcd.fillRect(209,34,2,4,RED);
+    M5.Lcd.fillRect(213,34,2,4,RED);
     //alt + tab
-    M5.Lcd.setTextColor(RED,BLACK);
+    M5.Lcd.setTextColor(GREEN,BLACK);
     M5.Lcd.setCursor(170,92);
     M5.Display.print("Alt + Tab");
   }
@@ -474,7 +474,7 @@ void setup() {
 
   //pertition draw
   M5.Lcd.drawLine(0,21,240,21,WHITE);
-  M5.Lcd.drawLine(135,22,135,104,DARKGREY);
+  M5.Lcd.drawLine(135,22,135,102,DARKGREY);
   M5.Lcd.drawLine(0,103,240,103,DARKGREY);
 
   //UI initialize
