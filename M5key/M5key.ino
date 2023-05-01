@@ -428,8 +428,63 @@ void setup() {
   pinMode(BTN2,INPUT_PULLUP);
   gpio_pullup_dis(GPIO_NUM_36);
   gpio_pulldown_dis(GPIO_NUM_36);
+  
 
-  M5.Lcd.setRotation(1);                 
+  //hand select
+  M5.Lcd.setRotation(1); 
+  M5.Lcd.setCursor(110,5);
+  M5.Display.setTextSize(1);
+  M5.Display.print("^ select hand/mode ");
+  M5.Lcd.setCursor(30,120);
+  M5.Display.print("enter/keyselect(selectable mode) >");
+  M5.Lcd.setCursor(20,30);
+  M5.Display.setTextSize(2);
+  M5.Display.println("Which hand?");
+
+  int hand = 1;
+  while(1){
+
+    M5.update();
+
+    if(M5.BtnB.isPressed()){
+      hand += 1;
+      if(hand > 2){
+        hand = 1;
+      }
+    }
+
+    if(hand == 1){
+      M5.Lcd.setCursor(20,50);
+      M5.Lcd.setTextColor(BLUE, WHITE);
+      M5.Display.print("1.RIGHT");
+      M5.Lcd.setCursor(20,70);
+      M5.Lcd.setTextColor(WHITE, BLACK);
+      M5.Display.print("2.LEFT");
+    }else{
+      M5.Lcd.setCursor(20,50);
+      M5.Lcd.setTextColor(WHITE, BLACK);
+      M5.Display.print("1.RIGHT");
+      M5.Lcd.setCursor(20,70);
+      M5.Lcd.setTextColor(BLUE, WHITE);
+      M5.Display.print("2.LEFT");
+    }
+
+    if(M5.BtnA.isPressed()){
+      break;
+    }
+
+    delay(100);
+  }
+
+  M5.Display.clear();
+
+
+  if(hand == 1){
+    M5.Lcd.setRotation(1);                 
+  }else{
+    M5.Lcd.setRotation(3);
+  }
+
   M5.Display.setTextSize(1); 
 
   //BLE mark draw
