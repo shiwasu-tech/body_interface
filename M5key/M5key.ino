@@ -33,8 +33,8 @@
 #include <BleKeyboard.h>  // https://github.com/T-vK/ESP32-BLE-Keyboard
 
 
-int BTN1 = 26;
-int BTN2 = 25;
+const int BTN1 = 26;
+const int BTN2 = 25;
 
 int mode = 1;
 int keynum = 1;
@@ -46,7 +46,7 @@ float gyroY = 0.0F;
 float gyroZ = 0.0F;
 
 
-BleKeyboard BleKeyboard("M5StickCPlus");  //デバイス名
+BleKeyboard BleKeyboard("M5StickCPlus-shortcutkey");  //デバイス名
 
 
 void KeySend(int mode,int com){
@@ -487,11 +487,10 @@ void setup() {
 
   M5.Display.setTextSize(1); 
 
-  //BLE mark draw
-  M5.Lcd.drawTriangle(9,6,13,10,9,14,BLUE);
-  M5.Lcd.drawTriangle(13,4,13,10,16,7,BLUE);
-  M5.Lcd.drawTriangle(13,10,13,16,16,13,BLUE);
-  M5.Lcd.drawLine(9,7,9,13,BLACK);
+  //BLE print
+  M5.Display.setCursor(7,7);
+  M5.Display.setTextColor(BLUE,BLACK);
+  M5.Display.print("BLE");
 
   //draw niC logo
   M5.Lcd.setCursor(155,6);
