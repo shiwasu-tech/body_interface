@@ -1,1 +1,4 @@
 TEST/
+**/*.json
+**/*.svd
+**/*.cfg
