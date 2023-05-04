@@ -1,4 +1,4 @@
 TEST/
-M5*/*.cfg
-M5*/*.svd
-M5*/*.json
+*.cfg
+*.svd
+*.json
