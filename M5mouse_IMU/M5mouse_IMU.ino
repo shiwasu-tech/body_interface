@@ -1,55 +1,38 @@
 #include <M5Unified.h>
 #include <BleMouse.h>
-#include <Wire.h>
-#define JOY_ADDR 0x52
-
-static int x,y,btn;
 
 const int BTN1 = 26;
-const int BTN2 = 25;
 
-int mode = 1;
-int msdir = 1;
-
-int mstemp = 0;
+float accX  = 0.0F;
+float accY  = 0.0F;
+float accZ  = 0.0F;
 
 float gyroX = 0.0F;
 float gyroY = 0.0F;
 float gyroZ = 0.0F;
 
-BleMouse BleMouse("M5-joymouse");
+float roll  = 0.0F;
+float pitch = 0.0F;
+float yaw   = 0.0F;
 
+int dir = 0; //-1:左ひねり 0:水平 1:右ひねり
+int motion = 0; //
 
-void MsSend(int mode,int com){
-  com = mode * 100 + com;
-  
+const float pi  = 3.14;
+
+BleMouse BleMouse("M5-IMUmouse");
+
+void readGyro(){
+  M5.Imu.getAccel(&accX, &accY, &accZ);             // 加速度の取得
+  M5.Imu.getGyro(&gyroX, &gyroY, &gyroZ);           // 角速度の取得
+  roll  =  atan(accX / sqrt((accY * accY) + (accZ * accZ))) * 180 / pi; 
+  pitch =  atan(accY / sqrt((accX * accX) + (accZ * accZ))) * 180 / pi; 
+  yaw   =  atan(sqrt((accX * accX) + (accY * accY)) / accZ) * 180 / pi;
 }
 
-void UIinit(int mode,int key){
 
-  //mode UI arrow init
-  M5.Lcd.fillTriangle(36,30,36,38,43,34,DARKGREY);
-  M5.Lcd.fillTriangle(36,50,36,58,43,54,DARKGREY);
-  M5.Lcd.fillTriangle(36,70,36,78,43,74,DARKGREY);
-  M5.Lcd.fillTriangle(36,90,36,98,43,94,DARKGREY);
 
-  if(mode == 1){
-    M5.Lcd.fillTriangle(36,30,36,38,43,34,RED);
-  }
 
-  if(mode == 2){
-    M5.Lcd.fillTriangle(36,50,36,58,43,54,RED);
-  }
-
-  if(mode == 3){
-  M5.Lcd.fillTriangle(36,70,36,78,43,74,RED);
-  }
-
-  if(mode == 4){
-    M5.Lcd.fillTriangle(36,90,36,98,43,94,RED);
-  }
-
-}
 
 void setup() {
 
@@ -61,9 +44,9 @@ void setup() {
   M5.begin(cfg);   
 
   pinMode(BTN1,INPUT_PULLUP);
-  pinMode(BTN2,INPUT_PULLUP);
-  gpio_pullup_dis(GPIO_NUM_36);
-  gpio_pulldown_dis(GPIO_NUM_36);
+  //pinMode(BTN2,INPUT_PULLUP);
+  //gpio_pullup_dis(GPIO_NUM_36);
+  //gpio_pulldown_dis(GPIO_NUM_36);
   
 
   //hand select
@@ -157,38 +140,43 @@ void setup() {
   M5.Lcd.drawLine(0,103,240,103,DARKGREY);
 
   //UI initialize
-  UIinit(1,0);
+  //UIinit(1,0);
 
   BleMouse.begin();
-  Wire.begin(32, 33);  
+
   M5.Imu.begin();
                                
 }
 
 void loop() {
-  Wire.requestFrom(JOY_ADDR, 3);
-  if(Wire.available()) { //If data is received.
-    
-    x = Wire.read();
-    y = Wire.read();
-    btn = Wire.read();
-
-    x -= 130;
-    y -= 130;
-
-  }
-
   
-  if(btn == 0){
-    BleMouse.release(MOUSE_MIDDLE);
-    if(x>10||x<-10||y>10||y<-10){
-      BleMouse.move(-x/10,y/10);
+  readGyro();
 
-    }
-  }else{
-    if(x>10||x<-10||y>10||y<-10){
-      BleMouse.press(MOUSE_MIDDLE);
-      BleMouse.move(-x/10,y/10);
+  if(digitalRead(BTN1) == 0){
+    if(roll < -30){
+
+      BleMouse.release(MOUSE_LEFT);
+
+      if(gyroX > 20 || gyroX < -20 || gyroZ > 20 || gyroZ < -20){
+
+        BleMouse.move(gyroX/5,-gyroZ/5);
+
+      }
+
+    }else if(roll > 30){
+
+      BleMouse.press(MOUSE_LEFT);
+
+      if(gyroX > 20 || gyroX < -20 || gyroZ > 20 || gyroZ < -20){
+        
+        BleMouse.move(-gyroX/5,gyroZ/5);
+
+      }
+
+    }else{
+      
+      BleMouse.release(MOUSE_LEFT);
+      BleMouse.release(MOUSE_RIGHT);
 
     }
   }
