@@ -15,10 +15,11 @@ float gyroZ = 0.0F;
 float roll  = 0.0F;
 float pitch = 0.0F;
 float yaw   = 0.0F;
+float roll_2= 0.0F;
 
-float x = 0.0F
-float y = 0.0F
-float z = 0.0F
+float x = 0.0F;
+float y = 0.0F;
+float z = 0.0F;
 
 BleMouse BleMouse("M5-IMUmouse");
 
@@ -100,8 +101,18 @@ void readGyro(){
   pitch =  atan(accY / sqrt((accX * accX) + (accZ * accZ))) * 180 / 3.14; 
   yaw   =  atan(sqrt((accX * accX) + (accY * accY)) / accZ) * 180 / 3.14;
 
-  //x =
-  //y = 
+  if(roll < 0){
+    roll_2 = -roll;
+  }
+
+  //if(yaw < 0){
+  //  yaw = -yaw;
+  //}
+
+  roll  = roll    *2*3.14/360;
+  yaw   = yaw     *2*3.14/360;
+  x = gyroX*(1-roll*roll/2);
+  y = gyroZ*(1-yaw*yaw/2);
 }
 
 
@@ -116,8 +127,8 @@ void setup(){
 
   pinMode(BTN1,INPUT_PULLUP);
   pinMode(BTN2,INPUT_PULLUP);
-  gpio_pullup_dis(GpiO_NUM_36);
-  gpio_pulldown_dis(GpiO_NUM_36);
+  gpio_pullup_dis(GPIO_NUM_36);
+  gpio_pulldown_dis(GPIO_NUM_36);
 
 
   //hand select
@@ -135,7 +146,7 @@ void setup(){
   //while(1){
   //
   //  M5.update();
-    //
+  //
   //  if(M5.BtnB.isPressed()){
   //    hand += 1;
   //    if(hand > 2){
@@ -229,7 +240,7 @@ void loop() {
 
       //move / wheel scroll
 
-      if(roll > && ){
+      if(roll > 0 || yaw > 0){
         BleMouse.release(MOUSE_LEFT);
         BleMouse.release(MOUSE_RIGHT);
         BleMouse.release(MOUSE_MIDDLE);
@@ -247,7 +258,7 @@ void loop() {
       
       // just click
 
-      if(roll > && ){
+      if(roll > 0 || yaw > 0){
         BleMouse.press(MOUSE_LEFT);
         BleMouse.release(MOUSE_RIGHT);
         BleMouse.release(MOUSE_MIDDLE);
@@ -262,7 +273,7 @@ void loop() {
 
       //drag / middle drag
 
-      if(roll > && ){
+      if(roll > 0 || yaw > 0){
         BleMouse.press(MOUSE_LEFT);
         BleMouse.release(MOUSE_RIGHT);
         BleMouse.release(MOUSE_MIDDLE);
