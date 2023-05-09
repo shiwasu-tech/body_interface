@@ -46,7 +46,7 @@ float gyroY = 0.0F;
 float gyroZ = 0.0F;
 
 
-BleKeyboard BleKeyboard("M5StickCPlus-shortcutkey");  //デバイス名
+BleKeyboard BleKeyboard("Motion-Key");  //デバイス名
 
 
 void KeySend(int mode,int com){

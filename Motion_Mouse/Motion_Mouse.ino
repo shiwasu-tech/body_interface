@@ -21,7 +21,7 @@ float x = 0.0F;
 float y = 0.0F;
 float z = 0.0F;
 
-BleMouse BleMouse("M5-IMUmouse");
+BleMouse BleMouse("Motion-Mouse");
 
 void drawUI(int x,int y,int left,int right,int middle,int dir,int twist){
 
@@ -103,16 +103,18 @@ void readGyro(){
 
   if(roll < 0){
     roll_2 = -roll;
+  }else{
+    roll_2 = roll;
   }
 
   //if(yaw < 0){
   //  yaw = -yaw;
   //}
 
-  roll  = roll    *2*3.14/360;
-  yaw   = yaw     *2*3.14/360;
-  x = gyroX*(1-roll*roll/2);
-  y = gyroZ*(1-yaw*yaw/2);
+  roll_2  = roll_2    *2*3.14/360;
+  yaw     = yaw       *2*3.14/360;
+  y = (-gyroX * (1- roll_2 * roll_2 /2) - gyroZ * (roll_2 - roll_2 * roll_2 * roll_2/6))/10;
+  x = (-gyroZ * (1- roll_2 * roll_2 /2) - gyroX * (roll_2 - roll_2 * roll_2 * roll_2/6))/10;
 }
 
 
@@ -301,7 +303,7 @@ void loop() {
     delay(500);
   }
 
-  delay(50);
+  delay(10);
   
 }
 
