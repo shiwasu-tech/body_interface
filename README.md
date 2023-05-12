@@ -11,7 +11,7 @@ This repository is "Body interface project" by shiwasu_tech since 2023/04/23
 作成方法
 0. このリポジトリをローカルに持ってくる。
 1. ArduinoIDEでライブラリ検索から[M5Unified]()と[M5GFX]()をダウンロード
-2. このリンクから[BLEmouse.h](https://github.com/T-vK/ESP32-BLE-Mouse)[BLEKeyboard.h](https://github.com/T-vK/ESP32-BLE-Keyboard)ライブラリをzip形式でインストール
+2. このリンクから[BLEmouse.h](https://github.com/T-vK/ESP32-BLE-Mouse),[BLEKeyboard.h](https://github.com/T-vK/ESP32-BLE-Keyboard)ライブラリをzip形式でインストール
 3. インストールしたzipファイルをArduinoIDEに取り込む(helpから「zip形式のライブラリをインクルード」)
 4. M5~~.inoと書かれたファイルをArduinoIDEで開き、PCとM5StickCPlusを繋いで書き込み
 
